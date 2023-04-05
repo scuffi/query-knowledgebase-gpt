@@ -37,7 +37,7 @@ def upload_question_pipeline(question: str):
     
     # Query database for relating sentences
     relating_sentences = database.query(vectorised[1])
-    log.debug(f"Relating: {relating_sentences}")
+    log.debug(f"Related: {relating_sentences}")
     
     # If no relating context found, return error
     if not relating_sentences:

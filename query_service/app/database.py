@@ -8,7 +8,7 @@ class Database:
             api_key=os.environ["PINECONE_API_KEY"],
             environment=os.environ["PINECONE_ENVIRONMENT"],
         )
-        self.index = pinecone.Index("query-example")
+        self.index = pinecone.Index(os.environ["PINECONE_INDEX"])
 
     def upload(self, sentences: list[tuple]):
         tuplified = [(str(uuid.uuid4()), sentence[1], {"value": sentence[0]}) for sentence in sentences]
