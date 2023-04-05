@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  query_service:
+    build:
+      context: ./query_service
+      dockerfile: ./Dockerfile
+    container_name: query_service
+    tty: true
+    restart: "always"
+    env_file:
+      - .env
+    ports:
+      - 7860:7860
+    volumes:
+      - ./query_service:/server
