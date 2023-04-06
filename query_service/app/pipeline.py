@@ -1,9 +1,12 @@
 from loguru import logger as log
 
+from datetime import datetime
+
 
 from database import Database
 from gpt import GPT
 from vectoriser import Vectoriser
+from prompt import Prompt
 
 database = Database()
 gpt = GPT()
@@ -42,8 +45,18 @@ def upload_question_pipeline(question: str):
     # If no relating context found, return error
     if not relating_sentences:
         return "[ERROR]: No knowledge found for this question!"
+    
+    # Create a prompt
+    prompt = Prompt(
+        "You are a fitness coach, tell me if this workout plan can be improved",
+        context=' '.join(relating_sentences),
+        workout_plan=question,
+    )
+    
+    log.info(prompt.build())
+    
     # Ask GPT question with found context
-    output = gpt.query(context=relating_sentences, question=question)
+    output = gpt.query(prompt)
     log.debug(f"GPT Output: {output}")
     
     return output
